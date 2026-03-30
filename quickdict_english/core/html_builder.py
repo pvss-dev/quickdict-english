@@ -2,6 +2,10 @@
 # html_builder.py — Builds the HTML interface based on the data
 
 from typing import Optional
+import html as _html
+
+def _esc(s: str) -> str:
+    return _html.escape(s or "")
 
 def generate_html(term: str, dict_data: Optional[dict], translation: Optional[str]) -> str:
     if not dict_data and not translation:
@@ -19,14 +23,14 @@ def generate_html(term: str, dict_data: Optional[dict], translation: Optional[st
             if not audio_url and ph.get("audio"):
                 audio_url = ph["audio"]
 
-    phonetic_html = f'<span class="edict-phonetic">{phonetic}</span>' if phonetic else ""
+    phonetic_html = f'<span class="edict-phonetic">{_esc(phonetic)}</span>' if phonetic else ""
     audio_html = (
-        f'<button class="edict-audio" data-audio="{audio_url}" aria-label="Ouvir pronúncia">▶</button>'
+        f'<button class="edict-audio" data-audio="{_esc(audio_url)}" aria-label="Ouvir pronúncia">▶</button>'
     ) if audio_url else ""
 
     sections.append(
         f'<div class="edict-header">'
-        f'<span class="edict-word">{term}</span>{phonetic_html}{audio_html}'
+        f'<span class="edict-word">{_esc(term)}</span>{phonetic_html}{audio_html}'
         f'</div>'
     )
 
@@ -35,7 +39,7 @@ def generate_html(term: str, dict_data: Optional[dict], translation: Optional[st
         sections.append(
             f'<div class="edict-section edict-translation">'
             f'<span class="edict-label">🇧🇷 Tradução</span>'
-            f'<div class="edict-translation-text">{translation}</div>'
+            f'<div class="edict-translation-text">{_esc(translation)}</div>'
             f'</div>'
         )
 
@@ -80,7 +84,7 @@ def generate_html(term: str, dict_data: Optional[dict], translation: Optional[st
                 example_text = defn.get("example", "") if not example_used else ""
 
                 item_html = '<div class="edict-def-item">'
-                item_html += f'<div class="edict-def-text">{definition_text}</div>'
+                item_html += f'<div class="edict-def-text">{_esc(definition_text)}</div>'
                 if example_text:
                     item_html += f'<div class="edict-example">"{example_text}"</div>'
                     example_used = True

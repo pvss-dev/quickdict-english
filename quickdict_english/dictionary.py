@@ -7,7 +7,7 @@ from .core.api import fetch_dictionary, fetch_translation
 from .core.html_builder import generate_html
 
 def build_tooltip_html(term: str) -> str:
-    """Função principal chamada pelo reviewer.py para retornar o HTML"""
+    """The main function called by reviewer.py to return the HTML."""
     
     cached = cache_get(term)
     if cached:

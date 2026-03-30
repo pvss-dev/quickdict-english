@@ -63,7 +63,7 @@ window.Edict.Events = (function () {
     var selection = window.getSelection();
     if (!selection) return;
     var term = selection.toString().trim();
-    if (term.length >= 2 && /[a-zA-Z]/.test(term)) {
+    if (term.length >= 2 && term.length <= 60 && /[a-zA-Z]/.test(term)) {
       handleLookup(term, x, y);
     }
   }

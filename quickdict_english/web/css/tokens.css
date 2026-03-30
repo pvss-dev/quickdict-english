@@ -63,7 +63,7 @@
   border-radius: 4px;
 }
 
-/* Reset do Anki */
+/* Anki reset */
 #edict-tooltip * {
   box-sizing: border-box;
   text-decoration: none !important;

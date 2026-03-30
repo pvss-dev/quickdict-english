@@ -5,8 +5,10 @@ import json
 import time
 from pathlib import Path
 from typing import Optional
+import threading
+_lock = threading.Lock()
 
-CACHE_FILE = Path(__file__).parent / "cache.json"
+CACHE_FILE = Path(__file__).parent.parent / "cache.json"
 CACHE_MAX = 500
 
 def _load_cache() -> dict:
@@ -27,13 +29,14 @@ def _save_cache(cache: dict) -> None:
 
 def cache_get(term: str) -> Optional[dict]:
     cache = _load_cache()
-    return cache.get(term.lower())
+    return cache.get(term.lower())  
 
 def cache_set(term: str, dict_data: Optional[dict], translation: Optional[str]) -> None:
-    cache = _load_cache()
-    cache[term.lower()] = {
-        "ts": time.time(),
-        "dict_data": dict_data,
-        "translation": translation,
-    }
-    _save_cache(cache)
+    with _lock:
+        cache = _load_cache()
+        cache[term.lower()] = {
+            "ts": time.time(),
+            "dict_data": dict_data,
+            "translation": translation,
+        }
+        _save_cache(cache)

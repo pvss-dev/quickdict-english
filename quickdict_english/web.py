@@ -5,7 +5,7 @@ from aqt import mw
 
 ADDON_MODULE = mw.addonManager.addonFromModule(__name__)
 
-# Agora carregamos todos os arquivos modulares
+# We have now loaded all the modular files
 popup_integrator = f"""
 <link rel="stylesheet" href="/_addons/{ADDON_MODULE}/web/css/tokens.css">
 <link rel="stylesheet" href="/_addons/{ADDON_MODULE}/web/css/layout.css">

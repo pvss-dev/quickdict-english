@@ -80,7 +80,7 @@ def on_webview_did_receive_js_message(
     if not message.startswith(PYCMD_IDENTIFIER):
         return handled
 
-    result = handle_message(message)
+    result = handle_message(message) or ""
     return (True, result)
 
 
@@ -104,7 +104,7 @@ def patch_reviewer():
 
 def initialize_reviewer():
     from aqt.gui_hooks import profile_did_open, webview_will_show_context_menu
-
+    
     profile_did_open.append(patch_reviewer)
+    profile_did_open.append(lambda: setup_shortcuts())
     webview_will_show_context_menu.append(on_webview_will_show_context_menu)
-    setup_shortcuts()
