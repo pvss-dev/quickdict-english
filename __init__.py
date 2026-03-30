@@ -1,0 +1,1 @@
+from .quickdict_english import main
