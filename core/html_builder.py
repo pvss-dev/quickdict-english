@@ -4,8 +4,12 @@
 from typing import Optional
 import html as _html
 
+_POS_PRIORITY = ["noun", "verb", "adjective", "adverb"]
+
+
 def _esc(s: str) -> str:
     return _html.escape(s or "")
+
 
 def generate_html(term: str, dict_data: Optional[dict], translation: Optional[str]) -> str:
     if not dict_data and not translation:
@@ -45,11 +49,11 @@ def generate_html(term: str, dict_data: Optional[dict], translation: Optional[st
 
     # Best definition + synonyms
     if dict_data:
-        POS_PRIORITY = ["noun", "verb", "adjective", "adverb"]
+
         meanings = dict_data.get("meanings", [])
 
         best_meaning = None
-        for preferred in POS_PRIORITY:
+        for preferred in _POS_PRIORITY:
             for m in meanings:
                 if m.get("partOfSpeech") == preferred:
                     best_meaning = m
@@ -65,7 +69,7 @@ def generate_html(term: str, dict_data: Optional[dict], translation: Optional[st
             synonyms = best_meaning.get("synonyms", [])
 
             for defn in definitions:
-                synonyms += defn.get("synonyms", [])
+                synonyms = defn.get("synonyms", [])
 
             seen = set()
             unique_synonyms = []

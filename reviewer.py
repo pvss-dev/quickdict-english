@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 # reviewer.py — Hooks into Anki's reviewer to handle JS <-> Python communication
 
-from typing import Any, Optional, Tuple, Union
+from typing import Any, Optional, Tuple
 
 from aqt import mw
 from aqt.reviewer import Reviewer
 from aqt.previewer import Previewer
-from aqt.qt import QMenu
+from aqt.qt import QMenu, QApplication
 
 from .dictionary import build_tooltip_html
 from .web import popup_integrator
@@ -19,7 +19,6 @@ def on_webview_will_show_context_menu(webview: Any, menu: QMenu):
         if webview.title not in ("main webview", "previewer"):
             return
 
-    from aqt.qt import QApplication
     window = QApplication.activeWindow()
     if mw.state != "review" and not isinstance(window, Previewer):
         return
@@ -27,12 +26,11 @@ def on_webview_will_show_context_menu(webview: Any, menu: QMenu):
         return
 
     action = menu.addAction("Look up in English Dictionary...")
-    action.triggered.connect(lambda: _lookup_selected(webview))
+    action.triggered.connect(_lookup_selected)
 
 
-def _lookup_selected(webview: Any):
+def _lookup_selected():
     """Triggers a lookup for the currently selected text via JS."""
-    from aqt.qt import QApplication
     window = QApplication.activeWindow()
     js = "invokeEnglishDict();"
     if isinstance(window, Previewer):

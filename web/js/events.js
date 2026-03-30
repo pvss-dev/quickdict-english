@@ -53,9 +53,8 @@ window.Edict.Events = (function () {
   // Drag-select: trigger lookup only if pointer moved enough
   document.addEventListener("mouseup", function (e) {
     if (isDoubleClick || e.button !== 0) return;
-    var dist = Math.sqrt(
-      Math.pow(e.clientX - mouseDownX, 2) + Math.pow(e.clientY - mouseDownY, 2),
-    );
+    var qa = document.getElementById("qa");
+    if (!qa || !qa.contains(e.target)) return;
     if (dist >= DRAG_THRESHOLD) handleSelection(e.clientX, e.clientY);
   });
 

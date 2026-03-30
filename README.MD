@@ -120,7 +120,7 @@ Contributions are welcome! Feel free to open an issue or submit a pull request.
 
 Some ideas for future improvements:
 
-- Settings UI (target language, shortcut key, max definitions)
+- Settings UI (target language, max definitions)
 - Support for other translation languages
 - Morphological normalization (look up base form of conjugated verbs)
 - Anki card creation from popup

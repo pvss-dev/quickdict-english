@@ -5,6 +5,7 @@ import json
 import urllib.request
 import urllib.parse
 from typing import Optional
+import sys
 
 def _get(url: str, timeout: int = 5) -> Optional[dict]:
     try:
@@ -14,7 +15,8 @@ def _get(url: str, timeout: int = 5) -> Optional[dict]:
         )
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             return json.loads(resp.read().decode("utf-8"))
-    except Exception:
+    except Exception as e:
+        print(f"[EnglishDict] API error: {e}", file=sys.stderr)
         return None
 
 def fetch_dictionary(word: str) -> Optional[dict]:
