@@ -6,6 +6,8 @@ import urllib.request
 import urllib.parse
 from typing import Optional
 import sys
+import urllib.error
+
 
 def _get(url: str, timeout: int = 5) -> Optional[dict]:
     try:
@@ -15,9 +17,14 @@ def _get(url: str, timeout: int = 5) -> Optional[dict]:
         )
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             return json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        if e.code != 404:
+            print(f"[EnglishDict] API error: {e}", file=sys.stderr)
+        return None
     except Exception as e:
         print(f"[EnglishDict] API error: {e}", file=sys.stderr)
         return None
+
 
 def fetch_dictionary(word: str) -> Optional[dict]:
     url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{urllib.parse.quote(word)}"
@@ -25,6 +32,7 @@ def fetch_dictionary(word: str) -> Optional[dict]:
     if not data or not isinstance(data, list):
         return None
     return data[0]
+
 
 def fetch_translation(word: str) -> Optional[str]:
     encoded = urllib.parse.quote(word)
