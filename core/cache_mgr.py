@@ -37,10 +37,9 @@ _cache_memory: dict = {}
 def cache_get(term: str) -> Optional[dict]:
     with _lock:
         return _cache_memory.get(term.lower())
-    return None
 
 
-def _load_memory_from_disk() -> None:
+def load_memory_from_disk() -> None:
     global _cache_memory
     _cache_memory = _load_cache()
 
