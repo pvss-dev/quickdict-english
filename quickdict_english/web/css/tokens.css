@@ -1,0 +1,70 @@
+/* Design tokens: light theme */
+:root {
+  --font-base: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --font-size-base: 14px;
+  --line-height-base: 1.5;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --bg: #ffffff;
+  --text: #1a1a1a;
+  --text-muted: #888;
+  --text-dim: #666;
+  --text-def: #222;
+  --accent: #1a73e8;
+  --accent-soft: #e8f0fe;
+  --border: #e8e8e8;
+  --border-def: #e0e0e0;
+  --scrollbar: #c1c1c1;
+  --translation-bg: #f0f7ff;
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.22), 0 1.5px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Design tokens: dark theme */
+[data-theme="dark"] {
+  --bg: #1e1e1e;
+  --text: #f0f0f0;
+  --text-muted: #888;
+  --text-dim: #999;
+  --text-def: #ddd;
+  --accent: #7ab4f5;
+  --accent-soft: #1e3a5f;
+  --border: #333;
+  --border-def: #444;
+  --scrollbar: #555;
+  --translation-bg: #162840;
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+}
+
+/* Animations */
+@keyframes edict-fadein {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes edict-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Scrollbar styling */
+#edict-tooltip::-webkit-scrollbar {
+  width: 6px;
+}
+#edict-tooltip::-webkit-scrollbar-thumb {
+  background: var(--scrollbar);
+  border-radius: 4px;
+}
+
+/* Reset do Anki */
+#edict-tooltip * {
+  box-sizing: border-box;
+  text-decoration: none !important;
+}

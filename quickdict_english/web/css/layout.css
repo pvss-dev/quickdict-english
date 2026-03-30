@@ -1,0 +1,41 @@
+/* Component: Tooltip shell */
+#edict-tooltip {
+  position: fixed;
+  z-index: 99999;
+  min-width: 260px;
+  max-width: min(420px, 90vw);
+  max-height: 480px;
+  max-height: 80vh;
+  overflow-y: auto;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  font-family: var(--font-base);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  padding: 0;
+  user-select: text;
+  animation: edict-fadein 0.12s ease-out;
+}
+
+/* Component: Container */
+.edict-container {
+  position: relative;
+  padding: var(--space-md) var(--space-lg) var(--space-sm) var(--space-lg);
+}
+
+/* Component: Header */
+.edict-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.edict-section {
+  margin-bottom: 10px;
+}
