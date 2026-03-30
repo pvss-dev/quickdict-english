@@ -21,7 +21,7 @@
 }
 
 /* Design tokens: dark theme */
-[data-theme="dark"] {
+.night_mode #edict-tooltip {
   --bg: #1e1e1e;
   --text: #f0f0f0;
   --text-muted: #888;

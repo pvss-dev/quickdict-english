@@ -125,7 +125,7 @@
   color: #dc3545;
 }
 
-[data-theme="dark"] .edict-close:hover {
+.night_mode .edict-close:hover {
   background: rgba(255, 107, 107, 0.15);
   color: #ff6b6b;
 }
@@ -182,7 +182,8 @@
   background: #e8f5e9;
 }
 
-[data-theme="dark"] .edict-copy.copied {
+.nightMode .edict-copy.copied,
+.night_mode .edict-copy.copied {
   color: #81c784;
   border-color: #388e3c;
   background: #1b3a1e;
