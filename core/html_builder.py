@@ -5,6 +5,7 @@ from typing import Optional
 import html as _html
 
 _POS_PRIORITY = ["noun", "verb", "adjective", "adverb"]
+_MAX_DEF_LENGTH = 120
 
 
 def _esc(s: str) -> str:
@@ -83,8 +84,10 @@ def generate_html(term: str, dict_data: Optional[dict], translation: Optional[st
             def_items = []
             example_used = False
 
-            for defn in definitions[:2]:
+            for defn in definitions[:1]:
                 definition_text = defn.get("definition", "")
+                if len(definition_text) > _MAX_DEF_LENGTH:
+                    definition_text = definition_text[:_MAX_DEF_LENGTH].rsplit(" ", 1)[0] + "…"
                 example_text = defn.get("example", "") if not example_used else ""
 
                 item_html = '<div class="edict-def-item">'
