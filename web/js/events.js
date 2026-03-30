@@ -55,6 +55,9 @@ window.Edict.Events = (function () {
     if (isDoubleClick || e.button !== 0) return;
     var qa = document.getElementById("qa");
     if (!qa || !qa.contains(e.target)) return;
+    var dist = Math.sqrt(
+        Math.pow(e.clientX - mouseDownX, 2) + Math.pow(e.clientY - mouseDownY, 2)
+    );
     if (dist >= DRAG_THRESHOLD) handleSelection(e.clientX, e.clientY);
   });
 

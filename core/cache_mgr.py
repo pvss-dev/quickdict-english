@@ -30,13 +30,26 @@ def _save_cache(cache: dict) -> None:
     except Exception:
         pass
 
+
 _cache_memory: dict = {}
 
+
 def cache_get(term: str) -> Optional[dict]:
-    return _cache_memory.get(term.lower())
-
-
-def cache_set(term: str) -> None:
     with _lock:
-        _cache_memory[term.lower()] = {...}
+        return _cache_memory.get(term.lower())
+    return None
+
+
+def _load_memory_from_disk() -> None:
+    global _cache_memory
+    _cache_memory = _load_cache()
+
+
+def cache_set(term: str, dict_data: Optional[dict], translation: Optional[str]) -> None:
+    with _lock:
+        _cache_memory[term.lower()] = {
+            "ts": time.time(),
+            "dict_data": dict_data,
+            "translation": translation,
+        }
         _save_cache(_cache_memory)

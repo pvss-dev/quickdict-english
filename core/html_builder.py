@@ -66,10 +66,10 @@ def generate_html(term: str, dict_data: Optional[dict], translation: Optional[st
         if best_meaning:
             part_of_speech = best_meaning.get("partOfSpeech", "")
             definitions = best_meaning.get("definitions", [])
-            synonyms = best_meaning.get("synonyms", [])
+            synonyms = list(best_meaning.get("synonyms", []))
 
             for defn in definitions:
-                synonyms = defn.get("synonyms", [])
+                synonyms = synonyms + defn.get("synonyms", [])
 
             seen = set()
             unique_synonyms = []

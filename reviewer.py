@@ -10,6 +10,7 @@ from aqt.qt import QMenu, QApplication
 
 from .dictionary import build_tooltip_html
 from .web import popup_integrator
+from .core.cache_mgr import _load_memory_from_disk
 
 PYCMD_IDENTIFIER = "englishDict"
 
@@ -94,3 +95,4 @@ def initialize_reviewer():
 
     profile_did_open.append(patch_reviewer)
     webview_will_show_context_menu.append(on_webview_will_show_context_menu)
+    _load_memory_from_disk()
