@@ -1,4 +1,4 @@
-// events.js — Monitors mouse/keyboard events and calls Python
+// events.js — Monitors mouse events and calls Python
 window.Edict = window.Edict || {};
 
 window.Edict.Events = (function () {
@@ -14,7 +14,7 @@ window.Edict.Events = (function () {
   var isDoubleClick = false;
   var DRAG_THRESHOLD = 6;
 
-  // Track cursor position for keyboard shortcut fallback
+  // Track cursor position
   document.addEventListener("mousemove", function (e) {
     window.Edict.lastMouseX = e.clientX;
     window.Edict.lastMouseY = e.clientY;
@@ -94,7 +94,7 @@ window.Edict.Events = (function () {
     });
   }
 
-  // Keyboard shortcut: called by reviewer.py
+  // Called by the right-click context menu action (via reviewer.py)
   window.invokeEnglishDict = function () {
     handleSelection(window.Edict.lastMouseX, window.Edict.lastMouseY);
   };

@@ -6,7 +6,7 @@ from typing import Any, Optional, Tuple, Union
 from aqt import mw
 from aqt.reviewer import Reviewer
 from aqt.previewer import Previewer
-from aqt.qt import QKeySequence, QMenu, QShortcut, QApplication
+from aqt.qt import QMenu
 
 from .dictionary import build_tooltip_html
 from .web import popup_integrator
@@ -14,17 +14,25 @@ from .web import popup_integrator
 PYCMD_IDENTIFIER = "englishDict"
 
 
-# Shortcut
+def on_webview_will_show_context_menu(webview: Any, menu: QMenu):
+    if hasattr(webview, "title"):
+        if webview.title not in ("main webview", "previewer"):
+            return
 
-def setup_shortcuts():
-    QShortcut(
-        QKeySequence("Alt+Shift+E"),
-        mw,
-        activated=on_lookup_triggered,
-    )
+    from aqt.qt import QApplication
+    window = QApplication.activeWindow()
+    if mw.state != "review" and not isinstance(window, Previewer):
+        return
+    if not webview.selectedText():
+        return
+
+    action = menu.addAction("Look up in English Dictionary...")
+    action.triggered.connect(lambda: _lookup_selected(webview))
 
 
-def on_lookup_triggered(*args):
+def _lookup_selected(webview: Any):
+    """Triggers a lookup for the currently selected text via JS."""
+    from aqt.qt import QApplication
     window = QApplication.activeWindow()
     js = "invokeEnglishDict();"
     if isinstance(window, Previewer):
@@ -33,24 +41,7 @@ def on_lookup_triggered(*args):
         mw.reviewer.web.eval(js)
 
 
-def on_webview_will_show_context_menu(webview: Any, menu: QMenu):
-    if hasattr(webview, "title"):
-        if webview.title not in ("main webview", "previewer"):
-            return
-
-    window = QApplication.activeWindow()
-    if (mw.state != "review" and not isinstance(window, Previewer)):
-        return
-    if not webview.selectedText():
-        return
-
-    action = menu.addAction("Look up in English Dictionary...")
-    action.setShortcut(QKeySequence("Alt+Shift+E"))
-    action.triggered.connect(on_lookup_triggered)
-
-
 # JS <-> Python bridge
-
 def handle_message(message: str) -> Optional[str]:
     """Receives pycmd messages from JS and returns HTML content."""
     if not message.startswith(PYCMD_IDENTIFIER + ":"):
@@ -60,12 +51,10 @@ def handle_message(message: str) -> Optional[str]:
     if not term:
         return None
 
-    # Run in a thread-safe way — Anki's pycmd callback is already on main thread
     return build_tooltip_html(term)
 
 
 # Anki hooks
-
 def on_webview_will_set_content(web_content: Any, context: Any):
     if not isinstance(context, (Reviewer, Previewer)):
         return
@@ -73,7 +62,7 @@ def on_webview_will_set_content(web_content: Any, context: Any):
 
 
 def on_webview_did_receive_js_message(
-    handled: Tuple[bool, Any], message: str, context: Any
+        handled: Tuple[bool, Any], message: str, context: Any
 ) -> Tuple[bool, Any]:
     if not isinstance(context, (Reviewer, Previewer)):
         return handled
@@ -81,7 +70,7 @@ def on_webview_did_receive_js_message(
         return handled
 
     result = handle_message(message) or ""
-    return (True, result)
+    return True, result
 
 
 _patched = False
@@ -104,7 +93,6 @@ def patch_reviewer():
 
 def initialize_reviewer():
     from aqt.gui_hooks import profile_did_open, webview_will_show_context_menu
-    
+
     profile_did_open.append(patch_reviewer)
-    profile_did_open.append(lambda: setup_shortcuts())
     webview_will_show_context_menu.append(on_webview_will_show_context_menu)
