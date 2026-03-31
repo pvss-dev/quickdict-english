@@ -127,7 +127,7 @@ Some ideas for future improvements:
 
 ---
 
-### 📜 License
+## 📜 License
 
 This project is licensed under the `GNU Affero General Public License v3.0 (AGPL-3.0)`. In short: you’re free to use,
 study, and modify this code—but if you run it as a service or distribute modified versions, you must make your source
@@ -141,6 +141,17 @@ I’ve put a lot of time into designing and maintaining this work. Please respec
 
 Copyright (C) 2026 Paulo Vitor Silva Soares
 
-### This is QuicKDict English
+---
+
+## This is QuicKDict English
+
 ![Light mode](assets/example_dark_mode.png)
 ![Dark mode](assets/example_light_mode.png)
+
+---
+
+### If you find this add-on useful, consider supporting its development:
+
+<a href="https://buymeacoffee.com/pvss">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" width="200">
+</a>
