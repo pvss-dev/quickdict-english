@@ -40,9 +40,16 @@ CSS/JS into every review session and listening for lookup requests from the fron
 
 ### From AnkiWeb
 
-Search for **English Pop-up Dictionary** in Anki's add-on browser, or install via code:
+The easiest way to install is directly through Anki using the add-on code:
 
-> Tools → Add-ons → Get Add-ons → paste the code
+1. Open Anki and go to **Tools** → **Add-ons** (or press `Ctrl+Shift+A`).
+2. Click on **Get Add-ons...**
+3. Paste the following code and click OK:
+   ```text
+   1095453310
+4. Restart Anki to activate the add-on.
+
+Alternatively, you can view the official add-on page on [AnkiWeb](https://ankiweb.net/shared/info/1095453310?cb=1774966736799).
 
 ### Manual
 
