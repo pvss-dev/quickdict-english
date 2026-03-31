@@ -26,7 +26,7 @@ def _save_cache(cache: dict) -> None:
             sorted_keys = sorted(cache, key=lambda k: cache[k].get("ts", 0))
             for key in sorted_keys[:len(cache) - CACHE_MAX]:
                 del cache[key]
-        CACHE_FILE.write_text(json.dumps(cache, ensure_ascii=False), encoding="utf-8")
+        CACHE_FILE.write_text(json.dumps(cache, ensure_ascii=False, indent=2), encoding="utf-8")
     except Exception:
         pass
 

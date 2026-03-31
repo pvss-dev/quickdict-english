@@ -31,7 +31,47 @@ def fetch_dictionary(word: str) -> Optional[dict]:
     data = _get(url)
     if not data or not isinstance(data, list):
         return None
-    return data[0]
+
+    raw_dict = data[0]
+
+    clean_dict = {
+        "phonetics": [],
+        "meanings": []
+    }
+
+    for ph in raw_dict.get("phonetics", []):
+        clean_ph = {}
+        if ph.get("text"):
+            clean_ph["text"] = ph["text"]
+        if ph.get("audio"):
+            clean_ph["audio"] = ph["audio"]
+
+        if clean_ph:
+            clean_dict["phonetics"].append(clean_ph)
+
+    for m in raw_dict.get("meanings", []):
+        clean_m = {
+            "partOfSpeech": m.get("partOfSpeech")
+        }
+
+        if m.get("synonyms"):
+            clean_m["synonyms"] = m.get("synonyms")
+
+        clean_m["definitions"] = []
+
+        for d in m.get("definitions", [])[:2]:
+            clean_d = {"definition": d.get("definition")}
+
+            if d.get("example"):
+                clean_d["example"] = d["example"]
+            if d.get("synonyms"):
+                clean_d["synonyms"] = d["synonyms"]
+
+            clean_m["definitions"].append(clean_d)
+
+        clean_dict["meanings"].append(clean_m)
+
+    return clean_dict
 
 
 def fetch_translation(word: str) -> Optional[str]:
