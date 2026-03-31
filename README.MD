@@ -140,3 +140,7 @@ I’ve put a lot of time into designing and maintaining this work. Please respec
 - If you build on it, please provide proper attribution.
 
 Copyright (C) 2026 Paulo Vitor Silva Soares
+
+### This is QuicKDict English
+![Light mode](assets/example_dark_mode.png)
+![Dark mode](assets/example_light_mode.png)
