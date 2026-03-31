@@ -22,11 +22,24 @@ def generate_html(term: str, dict_data: Optional[dict], translation: Optional[st
     phonetic = ""
     audio_url = ""
     if dict_data:
-        for ph in dict_data.get("phonetics", []):
-            if not phonetic and ph.get("text"):
-                phonetic = ph["text"]
-            if not audio_url and ph.get("audio"):
-                audio_url = ph["audio"]
+        phonetics_list = dict_data.get("phonetics", [])
+
+        for ph in phonetics_list:
+            text = ph.get("text", "")
+            url = ph.get("audio", "")
+
+            # 1. Store the first option found as a fallback
+            if text and not phonetic:
+                phonetic = text
+            if url and not audio_url:
+                audio_url = url
+
+            # 2. Highest priority for American English (-us)
+            if url and ("-us." in url.lower() or "-us" in url.lower()):
+                audio_url = url
+                if text:
+                    phonetic = text
+                break
 
     phonetic_html = f'<span class="edict-phonetic">{_esc(phonetic)}</span>' if phonetic else ""
     audio_html = (
